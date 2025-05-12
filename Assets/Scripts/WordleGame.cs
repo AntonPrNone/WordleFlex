@@ -129,6 +129,12 @@ public class WordleGame : MonoBehaviour
             return; // ќстанавливаем выполнение, если слово уже было
         }
 
+        if (!DatabaseManager.IsWordInDatabase(inputWord))
+        {
+            errorDisplay.ShowErrorPanel("ƒанного слова не существует! ƒопускаютс€ существительные в единственной числе");
+            return; // ќстанавливаем выполнение, если слово уже было
+        }
+
         // ƒобавл€ем текущее слово в список использованных
         usedWords.Add(inputWord.ToUpper());
 
@@ -163,6 +169,7 @@ public class WordleGame : MonoBehaviour
 
                 DisplayHUD(false);
             }
+
         }
 
         foreach (KeyboardManager obj in allKeyboardManagers) obj.UpdateLetterColors(inputWord);

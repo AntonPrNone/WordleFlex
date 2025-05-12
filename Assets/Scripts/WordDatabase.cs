@@ -295,6 +295,33 @@ public static class DatabaseManager
             return new GameSettings { SaveWordLose = false, SaveWordWin = true, AnimBG = false }; // Настройки по умолчанию
         }
     }
+
+    public static bool IsWordInDatabase(string word)
+    {
+        if (string.IsNullOrEmpty(word))
+        {
+            Debug.LogWarning("Передано пустое или нулевое значение слова.");
+            return false;
+        }
+
+        // Приведение к верхнему регистру для унификации проверки
+        string upperWord = word.ToUpper();
+
+        // Проверяем наличие слова в таблице Word
+        var existingWord = db.Table<Word>().FirstOrDefault(w => w.Value == upperWord);
+
+        if (existingWord != null)
+        {
+            Debug.Log($"Слово '{upperWord}' найдено в базе данных.");
+            return true;
+        }
+        else
+        {
+            Debug.Log($"Слово '{upperWord}' отсутствует в базе данных.");
+            return false;
+        }
+    }
+
 }
 
 public class BaseWord
